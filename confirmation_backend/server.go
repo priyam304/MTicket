@@ -80,3 +80,23 @@ func CreatePersonEndpoint(response http.ResponseWriter, request *http.Request) {
 	// result, _ := collection.InsertOne(ctx, person)
 	// json.NewEncoder(response).Encode(result)
 }
+
+func GetPersonEndpoint(response http.ResponseWriter, request *http.Request) {
+
+
+	//------------------LOCALHOST CODE--------------------
+
+	 response.Header().Set("content-type", "application/json")
+	 params := mux.Vars(request)
+	 id, _ := primitive.ObjectIDFromHex(params["id"])
+	 var person Person
+	 collection := client.Database("jay").Collection("people")
+	 ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+	 err := collection.FindOne(ctx, Person{ID: id}).Decode(&person)
+	 if err != nil {
+	 	response.WriteHeader(http.StatusInternalServerError)
+	 	response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+	 	return
+	 }
+	 json.NewEncoder(response).Encode(person)
+}

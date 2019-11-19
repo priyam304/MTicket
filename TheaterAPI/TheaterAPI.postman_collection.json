@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "07f1afab-f8ec-4d72-bb7d-3bb63b9312f8",
+		"name": "TheaterAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "local",
+			"item": [
+				{
+					"name": "create theater",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"Wideangle\",\n\t\"rating\" : \"4\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/theater",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"theater"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all theaters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/theaters",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"theaters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get theater",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/theater/PVR",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"theater",
+								"PVR"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete theater",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/theater/Wideangel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"theater",
+								"Wideangel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update theater",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"Wideangel\",\n\t\"rating\" : \"5\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/theater/Wideangel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"theater",
+								"Wideangel"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "aws",
+			"item": [
+				{
+					"name": "create theater host",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"PVR\",\n\t\"rating\" : \"4\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://18.234.76.215:3000/theater",
+							"protocol": "http",
+							"host": [
+								"18",
+								"234",
+								"76",
+								"215"
+							],
+							"port": "3000",
+							"path": [
+								"theater"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all theaters host",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://18.234.76.215:3000/theaters",
+							"protocol": "http",
+							"host": [
+								"18",
+								"234",
+								"76",
+								"215"
+							],
+							"port": "3000",
+							"path": [
+								"theaters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get theater host",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://18.234.76.215:3000/theater/PVR",
+							"protocol": "http",
+							"host": [
+								"18",
+								"234",
+								"76",
+								"215"
+							],
+							"port": "3000",
+							"path": [
+								"theater",
+								"PVR"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete theater host",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://18.234.76.215:3000/theater/Wideangel",
+							"protocol": "http",
+							"host": [
+								"18",
+								"234",
+								"76",
+								"215"
+							],
+							"port": "3000",
+							"path": [
+								"theater",
+								"Wideangel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update theater host",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"Wideangel\",\n\t\"rating\" : \"3\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://18.234.76.215:3000/theater/Wideangel",
+							"protocol": "http",
+							"host": [
+								"18",
+								"234",
+								"76",
+								"215"
+							],
+							"port": "3000",
+							"path": [
+								"theater",
+								"Wideangel"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

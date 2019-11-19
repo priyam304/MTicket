@@ -31,6 +31,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/person", CreatePersonEndpoint).Methods("POST")
+	router.HandleFunc("/person/{id}", GetPersonEndpoint).Methods("GET")
 
 	http.ListenAndServe(":"+port, router)
 }

@@ -25,3 +25,10 @@ make build
 ```
 make run
 ```
+
+# **API ENDPOINTS**
+
+####    1. Create User
+####    2. Get User by EmailID
+####    3. Get all Users
+####    4. Delete User by EMailID

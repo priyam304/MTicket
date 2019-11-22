@@ -129,3 +129,47 @@ func UpdateShowEndpoint(response http.ResponseWriter, request *http.Request){
 
     json.NewEncoder(response).Encode(updateResult)
 }
+
+
+
+func GetBookingEndpoint(response http.ResponseWriter,request *http.Request){
+   response.Header().Set("content-type", "application/json")
+    params := mux.Vars(request)
+    id:= (params["id"])
+    var bookings Bookings
+    collection := client.Database("Show").Collection("Bookings")
+    ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+    err := collection.FindOne(ctx, Bookings{ShowID: id}).Decode(&bookings)
+    if err != nil {
+        response.WriteHeader(http.StatusInternalServerError)
+        response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+        return
+    }
+    json.NewEncoder(response).Encode(bookings)
+}
+
+
+func GetAllBookingEndpoint(response http.ResponseWriter, request *http.Request) {
+    response.Header().Set("content-type", "application/json")
+    var bookings []Bookings
+    collection := client.Database("Show").Collection("Bookings")
+    ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+    cursor, err := collection.Find(ctx, bson.M{})
+    if err != nil {
+        response.WriteHeader(http.StatusInternalServerError)
+        response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+        return
+    }
+    defer cursor.Close(ctx)
+    for cursor.Next(ctx) {
+        var booking Bookings
+        cursor.Decode(&booking)
+        bookings = append(bookings, booking)
+    }
+    if err := cursor.Err(); err != nil {
+        response.WriteHeader(http.StatusInternalServerError)
+        response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+        return
+    }
+    json.NewEncoder(response).Encode(bookings)
+}

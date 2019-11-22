@@ -1,10 +1,10 @@
 # **Running USERAPI**
 
 - Use `Makefile` for
-    1. Set GOPATH .
-    2. Download and Install Dependencies.
-    3. Build.
-    4. Run.
+     Set GOPATH .
+     Download and Install Dependencies.
+     Build.
+     Run.
 
 #### 1. **Set GOPATH**
 ```
@@ -28,7 +28,33 @@ make run
 
 # **API ENDPOINTS**
 
-####    1. Create User
-####    2. Get User by EmailID
-####    3. Get all Users
-####    4. Delete User by EMailID
+####    1. Ping Check
+Checks if API is up and running.
+```
+/
+```
+####    2. Create User
+User data provided in body in Json format.
+```
+/user
+```
+####    3. Get User by EmailID
+User data for give email is returned if exist in database.
+```
+/user/{email}
+```
+####    4. Get all Users
+Data of all the users in the database is returned
+```
+/user
+```
+####    5. Delete User by EmailID
+Data of user with given email is deleted from database if it existed.
+```
+/user/{email}
+```
+####    6. Update user by EmailID
+Data of user is updated as provided in the body with the request if it exist.
+```
+/user/{email}
+```

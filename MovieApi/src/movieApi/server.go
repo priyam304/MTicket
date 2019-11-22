@@ -8,7 +8,6 @@ import(
 	"net/http"
 	"time"
 	"fmt"
-	"log"
 
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
@@ -17,7 +16,7 @@ import(
 )
 
 
-var mongoURI = "mongodb://localhost:27017"
+var mongoURI = "mongodb://admin:admin@10.0.1.170:27017"
 var client *mongo.Client
 
 
@@ -47,14 +46,16 @@ func CreateMovieEndpoint(response http.ResponseWriter, request *http.Request) {
 	_ = json.NewDecoder(request.Body).Decode(&movie)
 	collection := client.Database("Movie").Collection("Movies")
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-	result, _ := collection.InsertOne(ctx, movie)
+	result, err := collection.InsertOne(ctx, movie)
 
-	if result == nil{
-		json.NewEncoder(response).Encode("{'message':'Already Exists'}")
-		} else{
-
-			json.NewEncoder(response).Encode(result)
-		}	
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		return
+	} 
+		
+	json.NewEncoder(response).Encode(result)
+	
 }
 
 
@@ -68,10 +69,11 @@ func DeleteMovieEndpoint(response http.ResponseWriter, request *http.Request){
 	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
 	deleteResult, err := collection.DeleteOne(ctx, filter)
 	if err != nil {
-    log.Fatal(err)
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		return
 	}
-	//fmt.Printf("Deleted %v documents in the Movies collection\n", deleteResult.DeletedCount)
-
+	
 	json.NewEncoder(response).Encode(deleteResult)
 }
 
@@ -87,27 +89,25 @@ func UpdateMovieEndpoint(response http.ResponseWriter, request *http.Request){
 	name, _ := params["name"]
 	_ = json.NewDecoder(request.Body).Decode(&movie)
 
-	// fmt.Printf("newName : %q" , movie.Name )
-	// fmt.Printf("newRating : %q" , movie.Rating )
-
 	filter := bson.D{{"name",name}}
 	update := bson.D{
 	{ "$set",  bson.D{
 		{"name", movie.Name } ,{"rating", movie.Rating} ,
+		{"director", movie.Director} , {"stars", movie.Stars} , 
+		{"desc", movie.Desc} , 
 	}},
 	}
 	collection := client.Database("Movie").Collection("Movies")
 	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
 	updateResult, err := collection.UpdateOne(ctx, filter, update)
 	if err != nil {
-    log.Fatal(err)
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		return
 	}
-
-	//fmt.Printf("Matched %v documents and updated %v documents.\n", updateResult.MatchedCount, updateResult.ModifiedCount)
+	
  	json.NewEncoder(response).Encode(updateResult)
 }
-
-
 
 
 //Function to get all movies from the movies database
@@ -136,6 +136,12 @@ func GetAllMoviesEndpoint(response http.ResponseWriter, request *http.Request) {
 	json.NewEncoder(response).Encode(movies)
 }
 
+//Function for Ping checks
+func PingCheckEndpoint(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("content-type", "application/json")
+	json.NewEncoder(response).Encode("{'Response':'Movie Ping OK'}")
+		
+}
 
 
 

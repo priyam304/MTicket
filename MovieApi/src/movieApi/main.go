@@ -30,7 +30,8 @@ func main() {
 	router.HandleFunc("/movies", GetAllMoviesEndpoint).Methods("GET")
 	router.HandleFunc("/movie/{name}", GetMovieEndpoint).Methods("GET")
 	router.HandleFunc("/movie/{name}", UpdateMovieEndpoint).Methods("PUT")
-	router.HandleFunc("/movie/{name}", DeleteMovieEndpoint).Methods("DELETE")
+	router.HandleFunc("/movie/{name}", DeleteMovieEndpoint).Methods("POST")
+	router.HandleFunc("/", PingCheckEndpoint).Methods("GET")
 	
 	http.ListenAndServe(":"+port, router)
 

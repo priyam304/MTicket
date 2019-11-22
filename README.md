@@ -16,4 +16,4 @@ Professor Paul Nguyen
 
 # Architecture
 
-<img src="https://github.com/nguyensjsu/fa19-281-pandavas/Images/Architecture.jpg">
+<img src="https://github.com/nguyensjsu/fa19-281-pandavas/blob/master/Images/Architecture.jpg">

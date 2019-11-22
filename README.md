@@ -13,3 +13,7 @@ Professor Paul Nguyen
 3. Mihir Patel
 4. Jainish Parikh
 5. Prachal Patel
+
+# Architecture
+
+<img src="https://github.com/nguyensjsu/fa19-281-pandavas/Images/Architecture.jpg">

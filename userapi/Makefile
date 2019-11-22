@@ -18,7 +18,7 @@ run:
 	go run ./src/user
 
 install:
-	go install ./src/useruser
+	go install ./src/user
 
 build:
 	go build ./src/user

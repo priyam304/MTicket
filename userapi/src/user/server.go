@@ -16,10 +16,21 @@ import (
 var client *mongo.Client
 var mongodb_database = "Users"
 var mongodb_collection = "people"
-var mongoURI = "mongodb://localhost:27017"
 
-// var mongoURI = "mongodb://cmpe281:cmpe281@10.0.1.244:27017"
+//var mongoURI = "mongodb://localhost:27017"
+
+//var mongoURI = "mongodb://host.docker.internal:27017"
+var mongoURI = "mongodb://cmpe281:cmpe281@10.0.1.244:27017"
+
 type Users []User
+
+//Ping Check
+func PingCheckEndpoint(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("content-type", "application/json")
+
+	json.NewEncoder(response).Encode("{'Response':'API is UP!'}")
+
+}
 
 // Get User by Email
 func GetUserEndpoint(response http.ResponseWriter, request *http.Request) {
@@ -45,17 +56,21 @@ func CreateUserEndpoint(response http.ResponseWriter, request *http.Request) {
 	_ = json.NewDecoder(request.Body).Decode(&user)
 	collection := client.Database(mongodb_database).Collection(mongodb_collection)
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-	result, _ := collection.InsertOne(ctx, user)
-	if result == nil {
-		json.NewEncoder(response).Encode("{'message':'Already Exists'}")
-	} else {
-		json.NewEncoder(response).Encode(result)
+	result, err := collection.InsertOne(ctx, user)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		return
 	}
+
+	json.NewEncoder(response).Encode(result)
+
 }
 
 //Delete a User
 func DeleteUserEndpoint(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("content-type", "application/json")
+	var user User
 	params := mux.Vars(request)
 	email, _ := params["email"]
 	//var movie Movie
@@ -63,12 +78,23 @@ func DeleteUserEndpoint(response http.ResponseWriter, request *http.Request) {
 	collection := client.Database(mongodb_database).Collection(mongodb_collection)
 	///////
 	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+	err := collection.FindOne(ctx, User{Email: email}).Decode(&user)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		return
+	}
 	deleteResult, err := collection.DeleteOne(ctx, filter)
+
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("Deleted %v documents in the Movies collection\n", deleteResult.DeletedCount)
-
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		return
+	}
 	json.NewEncoder(response).Encode(deleteResult)
 }
 
@@ -82,26 +108,34 @@ func UpdateUserEndpoint(response http.ResponseWriter, request *http.Request) {
 
 	_ = json.NewDecoder(request.Body).Decode(&user)
 
-	fmt.Printf("newName : %q", user.Name)
-	fmt.Printf("newEmail : %q", user.Email)
+	fmt.Println("newName : %q", user.Name)
+	fmt.Println("newEmail : %q", user.Email)
+	fmt.Println("newPassword : %q", user.Password)
 
 	filter := bson.D{{"email", email}}
 
 	update := bson.D{
 		{"$set", bson.D{
-			{"name", user.Name}, {"email", user.Email},
+			{"name", user.Name}, {"email", user.Email}, {"password", user.Password},
 		}},
 	}
 
 	collection := client.Database(mongodb_database).Collection(mongodb_collection)
 	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
 	////
+	err := collection.FindOne(ctx, User{Email: email}).Decode(&user)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		return
+	}
 	updateResult, err := collection.UpdateOne(ctx, filter, update)
 	if err != nil {
-		log.Fatal(err)
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		return
 	}
-
-	fmt.Printf("Matched %v documents and updated %v documents.\n", updateResult.MatchedCount, updateResult.ModifiedCount)
+	//fmt.Printf("Matched %v documents and updated %v documents.\n", updateResult.MatchedCount, updateResult.ModifiedCount)
 
 	json.NewEncoder(response).Encode(updateResult)
 }

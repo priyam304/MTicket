@@ -1,6 +1,6 @@
 # BookMovie
 
-BookMovie is a movie booking web interface for booking movies. 
+BookMovie is a web interface for booking movies. 
 It uses various microservices to handle different requests.
 
 ### Team Pandavas

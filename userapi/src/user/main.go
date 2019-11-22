@@ -21,10 +21,11 @@ func main() {
 	clientOptions := options.Client().ApplyURI(mongoURI)
 	client, _ = mongo.Connect(ctx, clientOptions)
 	router := mux.NewRouter()
+	router.HandleFunc("/", PingCheckEndpoint).Methods("GET")
 	router.HandleFunc("/user", CreateUserEndpoint).Methods("POST")
 	router.HandleFunc("/user", GetAllUsersEndpoint).Methods("GET")
 	router.HandleFunc("/user/{email}", GetUserEndpoint).Methods("GET")
-	router.HandleFunc("/user/{email}", DeleteUserEndpoint).Methods("DELETE")
+	router.HandleFunc("/user/{email}", DeleteUserEndpoint).Methods("POST")
 	router.HandleFunc("/user/{email}", UpdateUserEndpoint).Methods("PUT")
 
 	http.ListenAndServe(":3000", router)

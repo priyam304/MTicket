@@ -11,8 +11,15 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var mongoURI = "mongodb://localhost:27017"
+var mongoURI = "mongodb://10.0.1.183:27017"
+// var mongoURI = "mongodb://localhost:27017"
 var client *mongo.Client
+
+// PingEndpoint to check pinging.
+func PingEndpoint(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("content-type", "application/json")
+	json.NewEncoder(response).Encode("{'Response' : 'Ping successful'}")
+}
 
 // GetTheaterEndpoint to get theater by name.
 func GetTheaterEndpoint(response http.ResponseWriter, request *http.Request) {
@@ -26,7 +33,7 @@ func GetTheaterEndpoint(response http.ResponseWriter, request *http.Request) {
 	err := collection.FindOne(ctx, Theater{Name: name}).Decode(&theater)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		response.Write([]byte(`{ "Response": "` + err.Error() + `" }`))
 		return
 	}
 	json.NewEncoder(response).Encode(theater)
@@ -56,11 +63,17 @@ func DeleteTheaterEndpoint(response http.ResponseWriter, request *http.Request) 
 	params := mux.Vars(request)
 	name, _ := params["name"]
 	filter := bson.D{{"name", name}}
+	var theater Theater
 	collection := client.Database("Theater").Collection("Theaters")
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
+	err := collection.FindOne(ctx, Theater{Name: name}).Decode(&theater)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "Response": "` + err.Error() + `" }`))
+		return
+	}
 	deleteResult, err := collection.DeleteOne(ctx, filter)
-
 	if deleteResult == nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		response.Write([]byte(`{ "Response": "` + err.Error() + `" }`))
@@ -91,7 +104,13 @@ func UpdateTheaterEndpoint(response http.ResponseWriter, request *http.Request) 
 	collection := client.Database("Theater").Collection("Theaters")
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	errGet := collection.FindOne(ctx, Theater{Name: name})
+	err := collection.FindOne(ctx, Theater{Name: name}).Decode(&theater)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "Response": "` + err.Error() + `" }`))
+		return
+	}
+	errGet := collection.FindOne(ctx, Theater{Name: name}).Decode(&theater)
 	if errGet != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		response.Write([]byte(`{ "Response": "Does not exists" }`))
@@ -117,7 +136,7 @@ func GetAllTheatersEndpoint(response http.ResponseWriter, request *http.Request)
 	cursor, err := collection.Find(ctx, bson.M{})
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		response.Write([]byte(`{ "Response": "` + err.Error() + `" }`))
 		return
 	}
 	defer cursor.Close(ctx)
@@ -128,7 +147,7 @@ func GetAllTheatersEndpoint(response http.ResponseWriter, request *http.Request)
 	}
 	if err := cursor.Err(); err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		response.Write([]byte(`{ "Response": "` + err.Error() + `" }`))
 		return
 	}
 	json.NewEncoder(response).Encode(theaters)

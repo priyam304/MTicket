@@ -26,10 +26,11 @@ func main() {
 	client, _ = mongo.Connect(ctx, clientOptions)
 	router := mux.NewRouter()
 
+	router.HandleFunc("/", PingEndpoint).Methods("GET")
 	router.HandleFunc("/theater", CreateTheaterEndpoint).Methods("POST")
 	router.HandleFunc("/theaters", GetAllTheatersEndpoint).Methods("GET")
 	router.HandleFunc("/theater/{name}", GetTheaterEndpoint).Methods("GET")
-	router.HandleFunc("/theater/{name}", DeleteTheaterEndpoint).Methods("DELETE")
+	router.HandleFunc("/theater/{name}", DeleteTheaterEndpoint).Methods("POST")
 	router.HandleFunc("/theater/{name}", UpdateTheaterEndpoint).Methods("PUT")
 
 	http.ListenAndServe(":"+port, router)

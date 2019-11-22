@@ -18,7 +18,7 @@ func main() {
     ctx,_:= context.WithTimeout(context.Background(),10*time.Second)
 
     
-    clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+    clientOptions := options.Client().ApplyURI("mongodb://admin:password@10.0.1.200:27017")
     client,_=mongo.Connect(ctx,clientOptions)
     router:=mux.NewRouter()
     router.HandleFunc("/show", CreateShowEndpoint).Methods("POST")

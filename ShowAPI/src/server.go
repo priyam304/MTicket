@@ -132,6 +132,57 @@ func UpdateShowEndpoint(response http.ResponseWriter, request *http.Request){
 
 
 
+func CreateBookingEndpoint(response http.ResponseWriter,request *http.Request){
+    response.Header().Set("content-type", "application/json")
+    var booking Bookings
+    _ = json.NewDecoder(request.Body).Decode(&booking)
+    collection := client.Database("Show").Collection("Bookings")
+    ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+    result, _ := collection.InsertOne(ctx, booking)
+
+   
+    
+    if result ==nil{
+       json.NewEncoder(response).Encode("{ message:Show already exists!}")
+    }else{
+    json.NewEncoder(response).Encode(result)
+    }
+}
+
+func BookShowEndpoint(response http.ResponseWriter,request *http.Request){
+    response.Header().Set("content-type", "application/json")
+    params := mux.Vars(request)
+    id:= (params["id"])
+    var bookings Bookings
+    var currentBooking InCommingRequest
+    _=json.NewDecoder(request.Body).Decode(&currentBooking)
+    collection:= client.Database("Show").Collection("Bookings")
+    ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+    err := collection.FindOne(ctx, Bookings{ShowID: id}).Decode(&bookings)
+    if err != nil {
+        fmt.Println("Error while fetching stored show bookings")
+        return
+    }
+    fmt.Println("Booking fetched!")
+    addedUsers:=append(bookings.Users,currentBooking.User)
+    fmt.Println(addedUsers)
+    filter := bson.D{{"ShowID",id}}
+    update := bson.D{
+    {"$set", bson.D{
+        {"Users", addedUsers},
+    }},
+    }
+    fmt.Println("BSON updated!")
+    //bookings.Users=addedUsers
+    updatedBooking, err1 := collection.UpdateOne(ctx, filter, update)
+    if err1 != nil {
+    log.Fatal(err1)
+    }
+    json.NewEncoder(response).Encode(updatedBooking)
+}
+
+
+
 func GetBookingEndpoint(response http.ResponseWriter,request *http.Request){
    response.Header().Set("content-type", "application/json")
     params := mux.Vars(request)

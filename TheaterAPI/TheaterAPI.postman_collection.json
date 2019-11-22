@@ -9,54 +9,19 @@
 			"name": "local",
 			"item": [
 				{
-					"name": "create theater",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\" : \"Wideangle\",\n\t\"rating\" : \"4\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/theater",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"theater"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get all theaters",
+					"name": "ping",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/theaters",
+							"raw": "http://localhost:3000/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"theaters"
+								""
 							]
 						}
 					},
@@ -83,12 +48,61 @@
 					"response": []
 				},
 				{
-					"name": "delete theater",
+					"name": "get all theaters",
 					"request": {
-						"method": "DELETE",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/theater/Wideangel",
+							"raw": "http://localhost:3000/theaters",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"theaters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create theater",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"Shiv\",\n\t\"rating\" : \"3.9\",\n\t\"address\" : \"Shivranjani\",\n\t\"screens\" : \"4\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/theater",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"theater"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete theater",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/theater/Shiv",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -96,7 +110,7 @@
 							"port": "3000",
 							"path": [
 								"theater",
-								"Wideangel"
+								"Shiv"
 							]
 						}
 					},
@@ -116,15 +130,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\" : \"Wideangel\",\n\t\"rating\" : \"5\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"name\" : \"Shiv\",\n\t\"rating\" : \"4\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/theater/Wideangel",
+							"raw": "http://localhost:3000/theater/Shiv",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -132,7 +141,7 @@
 							"port": "3000",
 							"path": [
 								"theater",
-								"Wideangel"
+								"Shiv"
 							]
 						}
 					},
@@ -142,10 +151,68 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "aws",
+			"name": "aws EC2",
 			"item": [
 				{
-					"name": "create theater host",
+					"name": "ping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{aws_port}}:3000/",
+							"protocol": "http",
+							"host": [
+								"{{aws_port}}"
+							],
+							"port": "3000",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get theater",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{aws_port}}:3000/theater/PVR",
+							"protocol": "http",
+							"host": [
+								"{{aws_port}}"
+							],
+							"port": "3000",
+							"path": [
+								"theater",
+								"PVR"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all theaters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{aws_port}}:3000/theaters",
+							"protocol": "http",
+							"host": [
+								"{{aws_port}}"
+							],
+							"port": "3000",
+							"path": [
+								"theaters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create theater",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -158,21 +225,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\" : \"PVR\",\n\t\"rating\" : \"4\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"name\" : \"Shiv\",\n\t\"rating\" : \"4\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}"
 						},
 						"url": {
-							"raw": "http://18.234.76.215:3000/theater",
+							"raw": "http://{{aws_port}}:3000/theater",
 							"protocol": "http",
 							"host": [
-								"18",
-								"234",
-								"76",
-								"215"
+								"{{aws_port}}"
 							],
 							"port": "3000",
 							"path": [
@@ -183,75 +242,27 @@
 					"response": []
 				},
 				{
-					"name": "get all theaters host",
+					"name": "delete theater",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://18.234.76.215:3000/theaters",
+							"raw": "http://{{aws_port}}:3000/theater/Shiv",
 							"protocol": "http",
 							"host": [
-								"18",
-								"234",
-								"76",
-								"215"
-							],
-							"port": "3000",
-							"path": [
-								"theaters"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get theater host",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://18.234.76.215:3000/theater/PVR",
-							"protocol": "http",
-							"host": [
-								"18",
-								"234",
-								"76",
-								"215"
+								"{{aws_port}}"
 							],
 							"port": "3000",
 							"path": [
 								"theater",
-								"PVR"
+								"Shiv"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "delete theater host",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://18.234.76.215:3000/theater/Wideangel",
-							"protocol": "http",
-							"host": [
-								"18",
-								"234",
-								"76",
-								"215"
-							],
-							"port": "3000",
-							"path": [
-								"theater",
-								"Wideangel"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update theater host",
+					"name": "update theater",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -264,26 +275,154 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\" : \"Wideangel\",\n\t\"rating\" : \"3\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"name\" : \"Shiv\",\n\t\"rating\" : \"4\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}"
 						},
 						"url": {
-							"raw": "http://18.234.76.215:3000/theater/Wideangel",
+							"raw": "http://{{aws_port}}:3000/theater/Shiv",
 							"protocol": "http",
 							"host": [
-								"18",
-								"234",
-								"76",
-								"215"
+								"{{aws_port}}"
 							],
 							"port": "3000",
 							"path": [
 								"theater",
-								"Wideangel"
+								"Shiv"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "aws ELB",
+			"item": [
+				{
+					"name": "ping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{elb_dns}}",
+							"protocol": "http",
+							"host": [
+								"{{elb_dns}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get theater",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{elb_dns}}/theater/PVR",
+							"protocol": "http",
+							"host": [
+								"{{elb_dns}}"
+							],
+							"path": [
+								"theater",
+								"PVR"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all theaters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{elb_dns}}/theaters",
+							"protocol": "http",
+							"host": [
+								"{{elb_dns}}"
+							],
+							"path": [
+								"theaters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create theater",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"PVR\",\n\t\"rating\" : \"4\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}"
+						},
+						"url": {
+							"raw": "http://{{elb_dns}}/theater",
+							"protocol": "http",
+							"host": [
+								"{{elb_dns}}"
+							],
+							"path": [
+								"theater"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete theater",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{elb_dns}}/theater/Shiv",
+							"protocol": "http",
+							"host": [
+								"{{elb_dns}}"
+							],
+							"path": [
+								"theater",
+								"Shiv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update theater",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"Shiv\",\n\t\"rating\" : \"4\",\n\t\"address\" : \"S.G. Highway\",\n\t\"screens\" : \"4\"\n}"
+						},
+						"url": {
+							"raw": "http://{{elb_dns}}/theater/Shiv",
+							"protocol": "http",
+							"host": [
+								"{{elb_dns}}"
+							],
+							"path": [
+								"theater",
+								"Shiv"
 							]
 						}
 					},

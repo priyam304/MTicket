@@ -1,10 +1,10 @@
 # **Running USERAPI**
 
 - Use `Makefile` for
-     Set GOPATH .
-     Download and Install Dependencies.
-     Build.
-     Run.
+     * Set GOPATH .
+     * Download and Install Dependencies.
+     * Build.
+     * Run.
 
 #### 1. **Set GOPATH**
 ```

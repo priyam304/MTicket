@@ -50,6 +50,19 @@ Each microservice uses a sharded mongoDB cluster. Each cluster contains followin
 - 2 Config Servers
 - 2 Shards each having a Replica Set which consists of 3 mongoDB instances
 
+## X-axis Scaling
+To achieve x-axis scaling we have dockerized GO API and deployed it to EC2 instance which runs behind a Load Balancer on AWS.
+
+## Y-axis  Scaling
+To achieve y-axis scaling we have used Service Oriented Architecture by dividing business logic into different microservices namely :
+- UserAPI
+- TheaterAPI
+- MovieAPI
+- ShowAPI
+- MailAPI
+
+## Z-axis Scaling
+To achieve z-axis scaling we have used MongoDB sharded cluster which has been deployed on AWS. MongoDB sharded cluster contains 1 Mongo Query Router, 2 config servers, 2 sharded replica sets.
 
 
 # References

@@ -1,4 +1,4 @@
-#USERAPI
+# USERAPI
 UserAPI is used to register and deregister a user using a unique Email address.
 
 ## **Running USERAPI**

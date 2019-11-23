@@ -24,7 +24,7 @@ make go-build
 
 #### 4. **Run API**
 ```
-go-run
+make go-run
 ```
 
 # **API Endpoints**

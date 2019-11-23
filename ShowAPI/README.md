@@ -1,5 +1,10 @@
 # **Running ShowAPI**
 
+-Explaination:
+-ShowAPI uses two collections.
+    1.One stores Show information:ShowID,TheatreID,MovieID
+    2.Second Collection stores which user is stored in which show.
+
 - Open terminal.
 - Use `Makefile` for
     1. Set GOPATH .

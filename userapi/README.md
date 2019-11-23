@@ -1,4 +1,7 @@
-# **Running USERAPI**
+#USERAPI
+UserAPI is used to register and deregister a user using a unique Email address.
+
+## **Running USERAPI**
 
 - Use `Makefile` for
      * Set GOPATH .
@@ -26,7 +29,7 @@ make build
 make run
 ```
 
-# **API ENDPOINTS**
+## **API ENDPOINTS**
 
 ####    1. Ping Check
 Checks if API is up and running.

@@ -37,7 +37,7 @@ export default class UserApi extends React.Component {
         body: JSON.stringify(user)
       });
       console.log("Result : "+result);
-      window.location.replace("/");
+      
 
     } catch (e) {
       console.log(e);

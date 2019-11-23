@@ -18,6 +18,7 @@ import Addmovie from "./addmovie";
 import Addtheater from"./addtheater";
 import Removetheater from "./removetheater";
 import Removemovie from "./removemovie";
+import Verifybooking from "./verify"
 
 //Create a Main Component
 class Main extends Component {
@@ -45,7 +46,7 @@ class Main extends Component {
                 <Route path="/addmovie" component={Addmovie}/>
                 <Route path="/removetheater" component={Removetheater}/>
                 <Route path="/removemovie" component={Removemovie}/>
-                
+                <Route path="/verify" component={Verifybooking}/>
 
 
             </div>

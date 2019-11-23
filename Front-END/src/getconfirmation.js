@@ -32,7 +32,7 @@ export default class GetconfirmationApi extends React.Component {
       console.log(this.state.email)
       console.log(this.state.mobile)
      // swal("GREAT!", "Enjoy the movie!", "success");
-      let result = fetch('http://34.68.43.210:8000/mailapi/sendmail/'+this.state.email,{
+      let result = fetch('http://54.237.2.113:3000/sendmail/'+this.state.email,{
         method: 'post',
         mode: 'no-cors',
         headers:{
@@ -45,7 +45,7 @@ export default class GetconfirmationApi extends React.Component {
 
    
 
-      let result2 = fetch('http://34.68.43.210:8000/mailapi/sendsms/'+this.state.email+','+this.state.mobile,{
+      let result2 = fetch('http://54.237.2.113:3000/sendsms/'+this.state.email+','+this.state.mobile,{
         method: 'post',
         mode: 'no-cors',
         headers:{

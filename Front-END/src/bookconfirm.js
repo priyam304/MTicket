@@ -56,7 +56,7 @@ export default class BookconfirmApi extends React.Component {
             theater: this.state.theater.name
           };
     
-        let result = fetch('http://34.68.43.210:8000/mailapi/person',{
+        let result = fetch('http://54.237.2.113:3000/person',{
         method: 'post',
         mode: 'no-cors',
         headers:{
@@ -67,7 +67,7 @@ export default class BookconfirmApi extends React.Component {
       });
       console.log("Result : "+result);
         
-     window.location.replace("/getconfirmation/?mail="+this.state.user.email);
+     window.location.replace("/verify/?mail="+this.state.user.email+"&movie="+this.state.movie.name+"&theater="+this.state.theater.name);
         
       }
   render() {

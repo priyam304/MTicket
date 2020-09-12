@@ -1,4 +1,4 @@
-# BookMovie
+# MTicket
 
 BookMovie is a web interface for booking movies. 
 It uses various microservices to handle different requests.

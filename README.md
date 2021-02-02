@@ -14,9 +14,7 @@ Professor Paul Nguyen
 4. Jainish Parikh
 5. Prachal Patel
 
-# Architecture
 
-<img src="https://github.com/nguyensjsu/fa19-281-pandavas/blob/master/Images/Architecture.jpg">
 
 
 # Design Summary
